@@ -7,7 +7,9 @@ export default function Header() {
 
   useEffect(() => {
     CartStore.subscribe(() => {
+      console.log("item count state", CartStore.getState());
       CartStore.getState().then((state) => {
+        console.log("item count State in then", state);
         if (state) {
           const itemCount = state.cart
             .map((item) => item.quantity)

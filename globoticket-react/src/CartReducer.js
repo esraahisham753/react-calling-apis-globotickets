@@ -11,7 +11,7 @@ const CartReducer = async (state = { cart: [] }, action) => {
       await fetch("https://ndf395-3333.csb.app/cart", {
         method: "POST",
         headers: {
-          "X_SESSION_TOKEN": UuidStore.value,
+          "X-SESSION-TOKEN": UuidStore.value,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id: action.payload.id }),
@@ -20,7 +20,7 @@ const CartReducer = async (state = { cart: [] }, action) => {
       response = await fetch("https://ndf395-3333.csb.app/cart", {
         method: "GET",
         headers: {
-          "X_SESSION_TOKEN": UuidStore.value,
+          "X-SESSION-TOKEN": UuidStore.value,
         },
       });
       cart = await response.json();
@@ -36,17 +36,18 @@ const CartReducer = async (state = { cart: [] }, action) => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            "X_SESSION_TOKEN": UuidStore.value,
+            "X-SESSION-TOKEN": UuidStore.value,
           },
           body: JSON.stringify({ id: action.payload.event_id }),
         });
       } else {
         // prettier-ignore
+        console.log("Increase quantity");
         await fetch("https://ndf395-3333.csb.app/cart", {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            "X_SESSION_TOKEN": UuidStore.value,
+            "X-SESSION-TOKEN": UuidStore.value,
           },
           body: JSON.stringify({
             id: action.payload.event_id,
@@ -58,11 +59,12 @@ const CartReducer = async (state = { cart: [] }, action) => {
       response = await fetch("https://ndf395-3333.csb.app/cart", {
         method: "GET",
         headers: {
-          "X_SESSION_TOKEN": UuidStore,
+          "X-SESSION-TOKEN": UuidStore,
         },
       });
 
-      cart = response.json();
+      cart = await response.json();
+      console.log("Cart after update", cart);
       return {
         ...state,
         cart: cart,
@@ -74,7 +76,7 @@ const CartReducer = async (state = { cart: [] }, action) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "X_SESSION_TOKEN": UuidStore.value,
+          "X-SESSION-TOKEN": UuidStore.value,
         },
         body: JSON.stringify({ id: action.payload.event_id }),
       });
@@ -82,7 +84,7 @@ const CartReducer = async (state = { cart: [] }, action) => {
       response = await fetch("https://ndf395-3333.csb.app/cart", {
         method: "GET",
         headers: {
-          "X_SESSION_TOKEN": UuidStore.value,
+          "X-SESSION-TOKEN": UuidStore.value,
         },
       });
 
@@ -98,18 +100,18 @@ const CartReducer = async (state = { cart: [] }, action) => {
       await fetch("https://ndf395-3333.csb.app/cart", {
         method: "DELETE",
         headers: {
-          "X_SESSION_TOKEN": UuidStore.value,
+          "X-SESSION-TOKEN": UuidStore.value,
         },
       });
       // prettier-ignore
       response = await fetch("https://ndf395-3333.csb.app/cart", {
         method: "GET",
         headers: {
-          "X_SESSION_TOKEN": UuidStore.value,
+          "X-SESSION-TOKEN": UuidStore.value,
         },
       });
 
-      cart = response.json();
+      cart = await response.json();
       return {
         ...state,
         cart: cart,

@@ -53,6 +53,7 @@ app.get("/cart", (req, res) => {
     let sql =
       "SELECT cartitem.*, event.artist, event.name, event.date, event.price, event.imgUrl FROM cartitem INNER JOIN event ON cartitem.event_id = event.id WHERE uuid = ?";
     db.all(sql, [req.header("X-SESSION-TOKEN")], (err, rows) => {
+      console.log("Cart rows from GET", rows);
       res.send(rows);
     });
   } else {
@@ -91,6 +92,8 @@ app.post("/cart", jsonParser, (req, res) => {
 
 app.patch("/cart", jsonParser, (req, res) => {
   if (req.header("X-SESSION-TOKEN") && req.body.id && req.body.quantity) {
+    console.log("patch id", req.body.id);
+    console.log("patch quantity", req.body.quantity);
     sql = "UPDATE cartitem SET quantity = ? WHERE uuid = ? AND event_id = ?";
     db.run(
       sql,
@@ -99,6 +102,15 @@ app.patch("/cart", jsonParser, (req, res) => {
         res.sendStatus(200).end();
       },
     );
+
+    /* Debug */
+    sql =
+      "SELECT cartitem.*, event.artist, event.name, event.date, event.price, event.imgUrl FROM cartitem INNER JOIN event ON cartitem.event_id = event.id WHERE uuid = ?";
+    db.all(sql, [req.header("X-SESSION-TOKEN")], (err, rows) => {
+      console.log("Cart rows from patch", rows);
+      //res.send(rows);
+    });
+    /* End Debug */
   } else {
     res.sendStatus(400).end();
   }
