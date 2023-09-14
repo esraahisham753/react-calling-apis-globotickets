@@ -5,7 +5,7 @@ export default function Eventlist() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch("https://766mf7-3333.csb.app/events")
+    fetch("https://ndf395-3333.csb.app/events")
       .then((response) => response.json())
       .then((data) => setEvents(data));
   }, []);
