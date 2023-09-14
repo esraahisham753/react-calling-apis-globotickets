@@ -6,10 +6,12 @@ const CartReducer = async (state = { cart: [] }, action) => {
 
   switch (action.type) {
     case "add":
+      console.log("Add id", action.payload.id);
+      // prettier-ignore
       await fetch("https://766mf7-3333.csb.app/cart", {
         method: "POST",
         headers: {
-          X_SESSION_TOKEN: UuidStore.value,
+          "X_SESSION_TOKEN": UuidStore.value,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id: action.payload.id }),
@@ -60,7 +62,7 @@ const CartReducer = async (state = { cart: [] }, action) => {
       cart = response.json();
       return {
         ...state,
-        cart: newCart,
+        cart: cart,
       };
 
     case "delete":

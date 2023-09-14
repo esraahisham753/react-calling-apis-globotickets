@@ -61,7 +61,10 @@ app.get("/cart", (req, res) => {
 });
 
 app.post("/cart", jsonParser, (req, res) => {
+  console.log("token: ", req.header("X-SESSION-TOKEN"));
+  console.log("Server id", req.body.id);
   if (req.header("X-SESSION-TOKEN") && req.body.id) {
+    console.log("In add if condition");
     let sql =
       "SELECT COUNT(*) as count FROM cartitem WHERE uuid = ? AND event_id = ?";
     db.get(
