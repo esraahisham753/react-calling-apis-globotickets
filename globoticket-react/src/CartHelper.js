@@ -26,6 +26,7 @@ export function addCart(id) {
     });
 
     let cart = await _getCart();
+    console.log("State before dispatch refresh", cart);
     dispatch({ type: "refresh", payload: cart });
   };
 }

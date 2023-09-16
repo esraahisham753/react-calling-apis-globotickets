@@ -27,7 +27,7 @@ export default function Shoppingcart() {
   };
 
   let handleOrderClick = () => {
-    CartStore.dispatch(clearCart());
+    dispatch(clearCart());
     history.push("/confirm");
   };
 

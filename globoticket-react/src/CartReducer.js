@@ -1,10 +1,11 @@
-const CartReducer = async (state = { cart: [] }, action) => {
+const CartReducer = (state = { cart: [] }, action) => {
   let cart = state.cart;
   switch (action.type) {
     case "refresh":
+      console.log("State after dispatch refresh", action.payload);
       return {
         ...state,
-        cart: action.payload.cart,
+        cart: action.payload,
       };
     default:
       return {
