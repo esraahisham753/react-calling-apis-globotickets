@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import CartStore from "./CartStore";
 import Shoppingcartitem from "./Shoppingcartitem";
+import { useDispatch } from "react-redux";
+import { clearCart } from "./CartHelper";
 
 export default function Shoppingcart() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -12,21 +15,19 @@ export default function Shoppingcart() {
   let updateCart = () => {
     const state = CartStore.getState();
 
-    state.then((state) => {
-      if (state) {
-        const cart = state.cart;
-        const totalAmount = state.cart.reduce(
-          (p, n) => p + n.quantity * n.price,
-          0,
-        );
-        setCart(cart);
-        setTotalAmount(totalAmount);
-      }
-    });
+    if (state) {
+      const cart = state.cart;
+      const totalAmount = state.cart.reduce(
+        (p, n) => p + n.quantity * n.price,
+        0,
+      );
+      setCart(cart);
+      setTotalAmount(totalAmount);
+    }
   };
 
   let handleOrderClick = () => {
-    CartStore.dispatch({ type: "clear" });
+    CartStore.dispatch(clearCart());
     history.push("/confirm");
   };
 

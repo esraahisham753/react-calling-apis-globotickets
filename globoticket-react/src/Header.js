@@ -8,15 +8,13 @@ export default function Header() {
   useEffect(() => {
     CartStore.subscribe(() => {
       console.log("item count state", CartStore.getState());
-      CartStore.getState().then((state) => {
-        console.log("item count State in then", state);
-        if (state) {
-          const itemCount = state.cart
-            .map((item) => item.quantity)
-            .reduce((p, n) => p + n, 0);
-          setItemCount(itemCount);
-        }
-      });
+      const state = CartStore.getState();
+      if (state) {
+        const itemCount = state.cart
+          .map((item) => item.quantity)
+          .reduce((p, n) => p + n, 0);
+        setItemCount(itemCount);
+      }
     });
   }, []);
 

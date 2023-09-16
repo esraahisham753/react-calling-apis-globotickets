@@ -59,31 +59,31 @@ export function updateCart(id, quantity) {
 }
 
 export function deleteCart(id) {
-    return async function deleteCartThunk(dispatch, getState) {
-        await fetch(cartUrl, {
-            method: 'DELETE',
-            headers: {
-                "Content-Type": 'application/json',
-                "X-SESSION-TOKEN": UuidStore.value
-            },
-            body: JSON.stringify({id: id})
-        });
+  return async function deleteCartThunk(dispatch, getState) {
+    await fetch(cartUrl, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "X-SESSION-TOKEN": UuidStore.value,
+      },
+      body: JSON.stringify({ id: id }),
+    });
 
-        let cart = await _getCart();
-        dispatch({type: "refresh", payload: cart});
-    }
+    let cart = await _getCart();
+    dispatch({ type: "refresh", payload: cart });
+  };
 }
 
 export function clearCart() {
-    return async function clearCartThunk(dispatch, getState) {
-        await fetch(cartUrl, {
-            method: "DELETE",
-            headers: {
-                "X-SESSION-TOKEN": UuidStore.value
-            }
-        });
+  return async function clearCartThunk(dispatch, getState) {
+    await fetch(cartUrl, {
+      method: "DELETE",
+      headers: {
+        "X-SESSION-TOKEN": UuidStore.value,
+      },
+    });
 
-        let cart = await _getCart();
-        dispatch({type})
-    }
+    let cart = await _getCart();
+    dispatch({ type: "refresh", payload: cart });
+  };
 }
