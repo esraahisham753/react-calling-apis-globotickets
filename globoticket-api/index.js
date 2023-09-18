@@ -102,7 +102,7 @@ app.patch("/cart", jsonParser, (req, res) => {
         res.sendStatus(200).end();
       },
     );
-
+    console.log("SQL update command excuted");
     /* Debug */
     sql =
       "SELECT cartitem.*, event.artist, event.name, event.date, event.price, event.imgUrl FROM cartitem INNER JOIN event ON cartitem.event_id = event.id WHERE uuid = ?";
