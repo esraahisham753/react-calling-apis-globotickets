@@ -36,16 +36,13 @@ export function addCart(id) {
 export function updateCart(id, quantity) {
   return async function updateCartThunk(dispatch, getState) {
     if (quantity === 0) {
-      await axios.delete(
-        cartUrl,
-        { id: id },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-SESSION-TOKEN": UuidStore.value,
-          },
+      await axios.delete(cartUrl, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-SESSION-TOKEN": UuidStore.value,
         },
-      );
+        data: { id: id },
+      });
     } else {
       await axios.patch(
         cartUrl,
@@ -67,16 +64,13 @@ export function updateCart(id, quantity) {
 
 export function deleteCart(id) {
   return async function deleteCartThunk(dispatch, getState) {
-    await axios.delete(
-      cartUrl,
-      { id: id },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "X-SESSION-TOKEN": UuidStore.value,
-        },
+    await axios.delete(cartUrl, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-SESSION-TOKEN": UuidStore.value,
       },
-    );
+      data: { id: id },
+    });
 
     let cart = await _getCart();
     dispatch({ type: "refresh", payload: cart });
