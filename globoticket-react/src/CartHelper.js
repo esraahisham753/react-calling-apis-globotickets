@@ -20,6 +20,7 @@ export function updateCart(id, quantity) {
   let resPromise;
 
   if (quantity === 0) {
+    console.log("quantity = 0");
     resPromise = fetch(cartUrl, {
       method: "DELETE",
       headers: {
@@ -28,6 +29,7 @@ export function updateCart(id, quantity) {
       },
       body: JSON.stringify({ id: id }),
     });
+    console.log("resPromise: ", resPromise);
   } else {
     resPromise = fetch(cartUrl, {
       method: "PATCH",
@@ -41,6 +43,8 @@ export function updateCart(id, quantity) {
 
   resPromise.then(() => {
     mutate(cartUrl);
+
+    console.log("Mutated");
   });
 }
 

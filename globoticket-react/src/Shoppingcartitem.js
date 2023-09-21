@@ -1,10 +1,7 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { updateCart, deleteCart } from "./CartHelper";
 
 export default function Shoppingcartitem({ event }) {
-  const dispatch = useDispatch();
-
   return (
     <tr className="align-middle">
       <td>
@@ -21,18 +18,13 @@ export default function Shoppingcartitem({ event }) {
             type="number"
             className="w-auto"
             value={event.quantity}
-            onChange={(e) =>
-              dispatch(updateCart(event.id, parseInt(e.target.value)))
-            }
+            onChange={(e) => updateCart(event.id, parseInt(e.target.value))}
           />
         </div>
       </td>
       <td>${event.quantity * event.price}</td>
       <td>
-        <button
-          className="btn btn-link"
-          onClick={() => dispatch(deleteCart(event.id))}
-        >
+        <button className="btn btn-link" onClick={() => deleteCart(event.id)}>
           <span className="bi bi-trash-fill font-large text-dark"></span>
         </button>
       </td>
