@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import Eventitem from "./Eventitem";
-import { useQuery } from "react-query";
-import { getEvents } from "./EventHelper";
+import { fetcher } from "./SwrHelper";
+import useSWR from "swr";
 
 export default function Eventlist() {
-  const [page, setPage] = useState(1);
-  const { data, isLoading } = useQuery(["events", page], () => getEvents(page));
+  const { data } = useSWR("https://ndf395-3333.csb.app/events", fetcher);
 
-  console.log("data", data);
-
-  if (isLoading) {
+  if (!data) {
     return <div className="container mt-5">Loading...</div>;
   }
 
@@ -28,32 +25,10 @@ export default function Eventlist() {
             </tr>
           </thead>
           <tbody>
-            {data.data.rows.map((event) => (
+            {data.map((event) => (
               <Eventitem event={event} key={event.id} />
             ))}
           </tbody>
-          <tfoot>
-            <tr>
-              <th colSpan="3" className="text-center">
-                <button
-                  className="btn btn-primary btn-primary-themed btn-md font-upper"
-                  disabled={page === 1}
-                  onClick={() => setPage(Math.max(1, page - 1))}
-                >
-                  Previous
-                </button>
-              </th>
-              <th colSpan="3">
-                <button
-                  className="btn btn-primary btn-primary-themed btn-md font-upper"
-                  disabled={!data.data.hasMore}
-                  onClick={() => setPage(page + 1)}
-                >
-                  Next
-                </button>
-              </th>
-            </tr>
-          </tfoot>
         </table>
       </div>
     </div>

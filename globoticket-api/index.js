@@ -24,9 +24,9 @@ app.use(
   }),
 );
 
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
   setTimeout(next, 2000);
-});
+});*/
 
 app.get("/", (req, res) => {
   res.send("Events API");

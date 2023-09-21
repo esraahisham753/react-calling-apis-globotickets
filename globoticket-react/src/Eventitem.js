@@ -1,9 +1,17 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { addCart } from "./CartHelper";
+import { useMutation } from "react-query";
 
 export default function Eventitem({ event }) {
   const dispatch = useDispatch();
+  const mutation = useMutation((id) => dispatch(addCart(id)), {
+    onSuccess: () => {
+      setTimeout(() => {
+        mutation.reset();
+      }, 2000);
+    },
+  });
 
   return (
     <tr className="align-middle">
@@ -19,11 +27,16 @@ export default function Eventitem({ event }) {
           type="button"
           className="btn btn-primary btn-primary-themed btn-md font-upper"
           onClick={() => {
-            dispatch(addCart(event.id));
+            mutation.mutate(event.id);
           }}
         >
           Add to Cart
         </button>
+        {mutation.isSuccess ? (
+          <span className="bi bi-bag-check-fill font-xxl ms-2 fade-out"></span>
+        ) : (
+          <span className="bi bi-bag-check-fill text-white font-xxl ms-2 fade-out"></span>
+        )}
       </td>
     </tr>
   );
