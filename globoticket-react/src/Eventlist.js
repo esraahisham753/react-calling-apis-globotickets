@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Eventitem from "./Eventitem";
 import { fetcher } from "./SwrHelper";
 import useSWR from "swr";
 
 export default function Eventlist() {
-  const { data } = useSWR("https://ndf395-3333.csb.app/events", fetcher);
+  const { data, error } = useSWR(
+    "https://ndf395-3333.csb.app/events",
+    fetcher,
+    { suspense: true },
+  );
 
-  if (!data) {
-    return <div className="container mt-5">Loading...</div>;
+  if (error) {
+    throw error;
   }
 
   return (

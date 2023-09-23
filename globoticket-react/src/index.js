@@ -2,9 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { Server } from "miragejs";
+//import { Server } from "miragejs";
+import { Provider } from "react-redux";
+import ErrorStore from "./ErrorStore";
 
-new Server({
+/*new Server({
   routes() {
     this.get("https://ndf395-3333.csb.app/events", () => [
       {
@@ -25,11 +27,13 @@ new Server({
       },
     ]);
   },
-});
+});*/
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={ErrorStore}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root"),
 );
